@@ -21,3 +21,24 @@ class signup(APIView):
         }
 
         return Response(response)
+
+
+class login(APIView):
+    def post(self, request, format=None):
+
+        email = request.data.get("email")
+        password = request.data.get("password")
+
+        user = authenticate(username=email, password=password)
+
+        if user:
+            token, created = Token.objects.get_or_create(user=user)
+            return Response({"token": token.key})
+
+        return Response({"error": "Invalid Credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+    
+
+class logout(APIView):
+    def post(self, request, format=None):
+        self.request.user.auth_token.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
