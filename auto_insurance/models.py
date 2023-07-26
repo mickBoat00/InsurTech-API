@@ -10,12 +10,12 @@ from django.dispatch import receiver
 class AutoPolicyDocument(models.Model):
     make = models.CharField(max_length=20)
     model = models.CharField(max_length=50)
-    year = models.IntegerField()
-    vin = models.CharField(max_length=17)   
+    year = models.PositiveIntegerField()
+    vin = models.CharField(max_length=17, unique=True)   
     usage = models.CharField(max_length=50)
-    mileage = models.IntegerField()
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='documents')
-    rating = models.IntegerField(null=True, blank=True)
+    mileage = models.PositiveIntegerField()
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='auto_documents')
+    rating = models.PositiveIntegerField(null=True, blank=True)
     verified = models.BooleanField(default=False)
 
     def rate_document(self):
