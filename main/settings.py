@@ -30,7 +30,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.list("DEBUG")
+DEBUG = env("DEBUG")
 
 ALLOWED_HOSTS = [env("ALLOWED_HOSTS")]
 
@@ -91,10 +91,13 @@ DATABASES = {
         'NAME': env("DATABASE_NAME"),
         'USER': env("DATABASE_USER"),
         'PASSWORD': env("DATABASE_PASSWORD"),
-        'HOST': f"/cloudsql/{env('DATABASE_HOST')}",
+        'HOST': env('DATABASE_HOST'),
         'PORT': env("DATABASE_PORT"),
     }
 }
+
+if DEBUG == False:
+    DATABASES['default']['HOST'] = f"/cloudsql/{env('DATABASE_HOST')}"
 
 
 # DATABASES = {
@@ -137,6 +140,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
+
+STATIC_ROOT = f"{BASE_DIR}/static"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
