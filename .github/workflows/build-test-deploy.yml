@@ -17,14 +17,24 @@ jobs:
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
 
+      - name: Set up dotenv
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '3.1.x'
+
+      - name: Load environment variables from .env
+        run: |
+          source .env_example
+          printenv
+
       - name: Configure Docker
         run: gcloud --quiet auth configure-docker europe-west2-docker.pkg.dev
 
       - name: Build Image
-        run: docker build --tag europe-west2-docker.pkg.dev/skillful-radar-387911/dynamic/config:latest --file ./Dockerfile .
+        run: docker build --tag europe-west2-docker.pkg.dev/${{ secrets.ADMIN_PROJECT }}/dynamic/config:latest .
 
       - name: Run test for built image
-        run: docker run europe-west2-docker.pkg.dev/skillful-radar-387911/dynamic/config:latest bash -c "python manage.py test"
+        run: docker run --env-file .env_example europe-west2-docker.pkg.dev/${{ secrets.ADMIN_PROJECT }}/dynamic/config:latest bash -c "python manage.py test"
 
       - name: Push to artifact registry
-        run: docker push europe-west2-docker.pkg.dev/skillful-radar-387911/dynamic/config:latest
+        run: docker push europe-west2-docker.pkg.dev/${{ secrets.ADMIN_PROJECT }}/dynamic/config:latest
