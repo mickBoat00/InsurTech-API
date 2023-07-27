@@ -30,7 +30,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env("DEBUG")
+DEBUG = int(env("DEBUG")) == 1
 
 ALLOWED_HOSTS = [env("ALLOWED_HOSTS")]
 
@@ -99,12 +99,6 @@ DATABASES = {
 if DEBUG == False:
     DATABASES['default']['HOST'] = f"/cloudsql/{env('DATABASE_HOST')}"
 
-
-# DATABASES = {
-#     'default': env("DATABASE_HOST")
-# }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -158,3 +152,15 @@ REST_FRAMEWORK = {
 }
 
 
+if DEBUG == False:
+
+    STORAGES = {
+        "default": {"BACKEND": "storages.backends.gcloud.GoogleCloudStorage"},
+        "staticfiles": {"BACKEND": "storages.backends.gcloud.GoogleCloudStorage"}
+    }
+
+    GS_BUCKET_NAME = 'work-dj-static'
+
+    from google.oauth2 import service_account
+
+    GS_CREDENTIALS = service_account.Credentials.from_service_account_file(f"{BASE_DIR}/gcp_sa_key.json")
