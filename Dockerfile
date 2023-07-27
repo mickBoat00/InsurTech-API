@@ -1,4 +1,4 @@
-FROM python:3.10-alpine  
+FROM python:3.10-slim-buster
 
 ENV DockerHOME=/home/app  
 
@@ -11,14 +11,12 @@ ENV PYTHONUNBUFFERED 1
 
 RUN pip install --upgrade pip  
 
-COPY . $DockerHOME  
+COPY . $DockerHOME 
 
 RUN pip install -r requirements.txt  
 
-RUN python manage.py makemigrations --no-input
+RUN chmod +x ./start.sh
 
-# RUN python manage.py migrate --no-input
+EXPOSE 8080
 
-EXPOSE 8000  
-
-CMD python manage.py runserver
+CMD ["./start.sh"]

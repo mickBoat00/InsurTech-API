@@ -9,7 +9,7 @@ from .serializers import AutoDocumentSerializer
 class AutoDocuments(ListModelMixin, CreateModelMixin, GenericAPIView):
     queryset = AutoPolicyDocument.objects.all()
     serializer_class = AutoDocumentSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
