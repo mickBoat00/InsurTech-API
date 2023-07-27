@@ -15,8 +15,8 @@ COPY . .
 
 RUN pip install -r requirements.txt  
 
-RUN chmod +x ./start.sh
+RUN chmod +x ./scripts/startup.sh
 
 EXPOSE 8080
 
-CMD ["./start.sh"]  
+CMD ["./scripts/startup.sh"]  

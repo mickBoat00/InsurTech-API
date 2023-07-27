@@ -1,0 +1,30 @@
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: authenticate with gcp
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
+
+      - name: Configure Docker
+        run: gcloud --quiet auth configure-docker europe-west2-docker.pkg.dev
+
+      - name: Build Image
+        run: docker build --tag europe-west2-docker.pkg.dev/skillful-radar-387911/dynamic/config:latest --file ./Dockerfile .
+
+      - name: Run test for built image
+        run: docker run europe-west2-docker.pkg.dev/skillful-radar-387911/dynamic/config:latest bash -c "python manage.py test"
+
+      - name: Push to artifact registry
+        run: docker push europe-west2-docker.pkg.dev/skillful-radar-387911/dynamic/config:latest
