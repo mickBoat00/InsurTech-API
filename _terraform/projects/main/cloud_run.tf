@@ -17,8 +17,5 @@ module "cloud_run" {
     "GCP_BUCKET_NAME" : "latest",
   }
 
-  #   secret_key_ref_key = "latest"
-  # secret_key_ref_name = data.google_secret_manager_secret_version.db_host.name
-  #   secret_key_ref_name = module.cloud_sql_postgres.scrt_vrs_module_value
   depends_on = [module.project_main]
 }
