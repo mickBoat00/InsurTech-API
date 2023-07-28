@@ -20,6 +20,10 @@ variable "sql_connection_name" {
 
 }
 
+variable "secrets" {
+
+}
+
 
 # variable "secret_key_ref_key" {
 

@@ -7,6 +7,22 @@ resource "google_cloud_run_service" "default" {
     spec {
       containers {
         image = var.image
+
+        dynamic "env" {
+          for_each = var.secrets
+
+          content {
+            name = env.key
+            value_from {
+              secret_key_ref {
+                name = env.key
+                key  = env.value
+              }
+            }
+          }
+        }
+
+
       }
     }
 
@@ -18,6 +34,8 @@ resource "google_cloud_run_service" "default" {
       }
     }
   }
+
+
   autogenerate_revision_name = true
 }
 
