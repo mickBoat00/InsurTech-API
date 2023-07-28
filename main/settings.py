@@ -35,6 +35,11 @@ DEBUG = int(env("DEBUG")) == 1
 ALLOWED_HOSTS = [env("ALLOWED_HOSTS")]
 
 
+from google.oauth2 import service_account
+
+GS_CREDENTIALS = service_account.Credentials.from_service_account_file(f"{BASE_DIR}/gcp_sa_key.json")
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -162,6 +167,4 @@ if DEBUG == False:
 
     GS_BUCKET_NAME = env("GCP_BUCKET_NAME")
 
-    from google.oauth2 import service_account
-
-    GS_CREDENTIALS = service_account.Credentials.from_service_account_file(f"{BASE_DIR}/gcp_sa_key.json")
+    

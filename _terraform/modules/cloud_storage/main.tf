@@ -2,7 +2,7 @@ resource "google_storage_bucket" "static" {
   project                     = var.project_id
   name                        = var.name
   location                    = "US"
-  force_destroy               = false
+  force_destroy               = true
   uniform_bucket_level_access = true
   storage_class               = "STANDARD"
 
