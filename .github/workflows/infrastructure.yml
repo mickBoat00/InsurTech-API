@@ -1,3 +1,5 @@
+name: Create Cloud Infrastructure
+
 on:
   push:
 

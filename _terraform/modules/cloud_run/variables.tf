@@ -16,9 +16,9 @@ variable "project_id" {
 }
 
 
-# variable "sql_connection_name" {
+variable "sql_connection_name" {
 
-# }
+}
 
 
 # variable "secret_key_ref_key" {

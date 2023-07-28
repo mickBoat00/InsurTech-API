@@ -1,3 +1,5 @@
+name: Build, test and push Docker Image
+
 on:
   workflow_call:
 
