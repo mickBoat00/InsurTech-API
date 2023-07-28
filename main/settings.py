@@ -160,7 +160,7 @@ if DEBUG == False:
         "staticfiles": {"BACKEND": "storages.backends.gcloud.GoogleCloudStorage"}
     }
 
-    GS_BUCKET_NAME = 'work-dj-static'
+    GS_BUCKET_NAME = env("GCP_BUCKET_NAME")
 
     from google.oauth2 import service_account
 

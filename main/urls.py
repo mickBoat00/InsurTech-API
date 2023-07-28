@@ -25,7 +25,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/auth/", include("accounts.urls")),
     path("api/auto/", include("auto_insurance.urls")),
-    path("docs/", include_docs_urls(title="Insurance API")),
+    path("", include_docs_urls(title="Insurance API")),
     path("schema", get_schema_view(
         title="Insurance API",
         description="API for insurance tech",
