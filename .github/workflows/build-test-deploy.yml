@@ -1,5 +1,5 @@
 on:
-  push:
+  workflow_call:
 
 jobs:
   build:
@@ -16,16 +16,6 @@ jobs:
 
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
-
-      - name: Set up dotenv
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '3.1.x'
-
-      - name: Load environment variables from .env
-        run: |
-          source .env_example
-          printenv
 
       - name: Configure Docker
         run: gcloud --quiet auth configure-docker europe-west2-docker.pkg.dev
