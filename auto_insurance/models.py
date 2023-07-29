@@ -2,8 +2,6 @@ import random
 
 from django.conf import settings
 from django.db import models
-from django.db.models.signals import post_save, pre_save
-from django.dispatch import receiver
 
 
 # Create your models here.
@@ -24,6 +22,13 @@ class AutoPolicyDocument(models.Model):
     def __str__(self):
         return f"{self.make} {self.model} {self.vin}"
 
-@receiver(pre_save, sender=AutoPolicyDocument)
-def rating_document(sender, instance, *args, **kwargs):
-    instance.rate_document()
+
+class AutoCoverageDetails(models.Model):
+    body_liability_per_person = models.PositiveIntegerField(null=True, blank=True, help_text="Amount paid per person involved")
+    total_body_liability = models.PositiveIntegerField(null=True, blank=True, help_text="Total amount for all parties involved")
+    property_damage_liability = models.PositiveIntegerField(null=True, blank=True,help_text="Total amount paid for other party propert damage.")
+    comprehensive = models.BooleanField(default=False,help_text="Non collision incident ie theft, fire, vandalism")
+    collision = models.BooleanField(default=False)
+    auto_documents = models.OneToOneField(AutoPolicyDocument, on_delete=models.CASCADE)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
