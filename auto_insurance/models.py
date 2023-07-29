@@ -21,8 +21,7 @@ class AutoPolicyDocument(models.Model):
 
     def __str__(self):
         return f"{self.make} {self.model} {self.vin}"
-
-
+    
 class AutoCoverageDetail(models.Model):
     body_liability_per_person = models.PositiveIntegerField(null=True, blank=True, help_text="Amount paid per person involved")
     total_body_liability = models.PositiveIntegerField(null=True, blank=True, help_text="Total amount for all parties involved")

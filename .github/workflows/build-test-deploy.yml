@@ -1,32 +1,32 @@
-name: Build, test and push Docker Image
+# name: Build, test and push Docker Image
 
-on:
-  workflow_call:
+# on:
+#   workflow_call:
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
       
-      - name: authenticate with gcp
-        uses: 'google-github-actions/auth@v1'
-        with:
-          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+#       - name: authenticate with gcp
+#         uses: 'google-github-actions/auth@v1'
+#         with:
+#           credentials_json: '${{ secrets.GCP_SA_KEY }}'
 
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v1'
+#       - name: 'Set up Cloud SDK'
+#         uses: 'google-github-actions/setup-gcloud@v1'
 
-      - name: Configure Docker
-        run: gcloud --quiet auth configure-docker europe-west2-docker.pkg.dev
+#       - name: Configure Docker
+#         run: gcloud --quiet auth configure-docker europe-west2-docker.pkg.dev
 
-      - name: Build Image
-        run: docker build --tag europe-west2-docker.pkg.dev/${{ secrets.ADMIN_PROJECT }}/dynamic/config:latest .
+#       - name: Build Image
+#         run: docker build --tag europe-west2-docker.pkg.dev/${{ secrets.ADMIN_PROJECT }}/dynamic/config:latest .
 
-      - name: Run test for built image
-        run: docker run --env-file .env_example europe-west2-docker.pkg.dev/${{ secrets.ADMIN_PROJECT }}/dynamic/config:latest bash -c "python manage.py test"
+#       - name: Run test for built image
+#         run: docker run --env-file .env_example europe-west2-docker.pkg.dev/${{ secrets.ADMIN_PROJECT }}/dynamic/config:latest bash -c "python manage.py test"
 
-      - name: Push to artifact registry
-        run: docker push europe-west2-docker.pkg.dev/${{ secrets.ADMIN_PROJECT }}/dynamic/config:latest
+#       - name: Push to artifact registry
+#         run: docker push europe-west2-docker.pkg.dev/${{ secrets.ADMIN_PROJECT }}/dynamic/config:latest
