@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
-from .models import AutoPolicyDocument
+from .models import AutoCoverageDetail, AutoPolicyDocument
 
 
 class AutoDocumentSerializer(ModelSerializer):
@@ -12,3 +12,8 @@ class AutoDocumentSerializer(ModelSerializer):
             'user',
             'rating',
         )
+
+class AutoCoverageSerializers(ModelSerializer):
+    class Meta:
+        model = AutoCoverageDetail
+        fields = '__all__'

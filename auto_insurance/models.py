@@ -23,7 +23,7 @@ class AutoPolicyDocument(models.Model):
         return f"{self.make} {self.model} {self.vin}"
 
 
-class AutoCoverageDetails(models.Model):
+class AutoCoverageDetail(models.Model):
     body_liability_per_person = models.PositiveIntegerField(null=True, blank=True, help_text="Amount paid per person involved")
     total_body_liability = models.PositiveIntegerField(null=True, blank=True, help_text="Total amount for all parties involved")
     property_damage_liability = models.PositiveIntegerField(null=True, blank=True,help_text="Total amount paid for other party propert damage.")

@@ -1,7 +1,8 @@
 from django.urls import path
 
-from .views import AutoDocuments
+from .views import AutoCoverageView, AutoDocumentView
 
 urlpatterns = [
-    path("documents/", AutoDocuments.as_view(), name="auto-documents")
+    path("documents/", AutoDocumentView.as_view(), name="auto-documents"),
+    path("coverages/", AutoCoverageView.as_view(), name="auto-coverage"),
 ]
