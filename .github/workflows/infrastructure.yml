@@ -2,14 +2,16 @@ name: Create Cloud Infrastructure
 
 on:
   push:
+    branches:
+      - 'master'
 
 jobs:
-  # build-test-deploy:
-  #   uses: ./.github/workflows/build-test-deploy.yml
-  #   secrets: inherit
+  build-test-deploy:
+    uses: ./.github/workflows/build-test-deploy.yml
+    secrets: inherit
 
   infrastucture-creation:
-    # needs: build-test-deploy
+    needs: build-test-deploy
     runs-on: ubuntu-latest
 
     steps:
