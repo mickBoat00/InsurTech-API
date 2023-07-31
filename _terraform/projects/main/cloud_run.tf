@@ -17,5 +17,7 @@ module "cloud_run" {
     "GCP_BUCKET_NAME" : "latest",
   }
 
-  depends_on = [module.project_main]
+  vpc_connector_id = module.vpc_connect.connector_id
+
+  depends_on = [module.project_main, module.cloud_sql_postgres]
 }

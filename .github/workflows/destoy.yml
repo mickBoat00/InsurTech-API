@@ -1,33 +1,33 @@
-# name: Delete Cloud Infrastructure
+name: Delete Cloud Infrastructure
 
-# on:
-#   workflow_dispatch:
+on:
+  workflow_dispatch:
 
-# jobs:
+jobs:
 
-#   infrastucture-creation:
-#     runs-on: ubuntu-latest
+  infrastucture-deletion:
+    runs-on: ubuntu-latest
 
-#     steps:
-#       - name: Checkout repository
-#         uses: actions/checkout@v3
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-#       - name: authenticate with gcp
-#         uses: 'google-github-actions/auth@v1'
-#         with:
-#           credentials_json: '${{ secrets.GCP_SA_KEY }}'
+      - name: authenticate with gcp
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
 
-#       - name: Setup Terraform
-#         uses: hashicorp/setup-terraform@v2
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
 
-#       - name: Terraform Init
-#         run: terraform init 
-#         working-directory: _terraform/
+      - name: Terraform Init
+        run: terraform init 
+        working-directory: _terraform/
 
-#       - name: Terraform Workspace
-#         run: terraform workspace new ${{ github.ref_name }} || terraform workspace select ${{ github.ref_name }}
-#         working-directory: _terraform/
+      - name: Terraform Workspace
+        run: terraform workspace new ${{ github.ref_name }} || terraform workspace select ${{ github.ref_name }}
+        working-directory: _terraform/
 
-#       - name: Terraform Destroy
-#         run: terraform destroy -var="project_id=${{ secrets.ADMIN_PROJECT }}" -var="image_tag=europe-west2-docker.pkg.dev/${{ secrets.ADMIN_PROJECT }}/dynamic/config:latest" -auto-approve  -input=false
-#         working-directory: _terraform/
+      - name: Terraform Destroy
+        run: terraform destroy -var="project_id=${{ secrets.ADMIN_PROJECT }}" -var="image_tag=europe-west2-docker.pkg.dev/${{ secrets.ADMIN_PROJECT }}/dynamic/config:latest" -auto-approve  -input=false
+        working-directory: _terraform/

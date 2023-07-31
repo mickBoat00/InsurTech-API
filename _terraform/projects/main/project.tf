@@ -4,7 +4,8 @@ module "project_main" {
   enabled_apis = [
     "servicenetworking.googleapis.com",
     "iam.googleapis.com",
-    "run.googleapis.com"
+    "run.googleapis.com",
+    "vpcaccess.googleapis.com",
   ]
 }
 

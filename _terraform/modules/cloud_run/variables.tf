@@ -25,6 +25,10 @@ variable "secrets" {
 }
 
 
+variable "vpc_connector_id" {
+
+}
+
 # variable "secret_key_ref_key" {
 
 # }

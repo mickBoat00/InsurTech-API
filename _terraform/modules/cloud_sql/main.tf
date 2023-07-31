@@ -56,12 +56,12 @@ resource "random_password" "password" {
 
 resource "google_sql_database" "database" {
   project  = var.project_id
-  name     = "postgres_db"
+  name     = "conf"
   instance = google_sql_database_instance.instance.name
 }
 
 resource "google_sql_user" "user" {
-  name     = "postgres_user"
+  name     = "admin"
   project  = var.project_id
   instance = google_sql_database_instance.instance.name
   password = random_password.password.result
@@ -72,7 +72,7 @@ module "secrets" {
   source     = "../secrets"
   project_id = var.project_id
   secrets = {
-    "DATABASE_HOST" : google_sql_database_instance.instance.connection_name
+    "DATABASE_HOST" : google_sql_database_instance.instance.private_ip_address
     "DATABASE_NAME" : google_sql_database.database.name
     "DATABASE_PASSWORD" : google_sql_user.user.password
     "DATABASE_PORT" : "5432"
