@@ -10,7 +10,7 @@ from django.dispatch import receiver
 class AutoPolicyDocument(models.Model):
     make = models.CharField(max_length=20)
     model = models.CharField(max_length=50)
-    year = models.PositiveIntegerField()
+    year = models.PositiveIntegerField(max_length=4)
     vin = models.CharField(max_length=17, unique=True)   
     usage = models.CharField(max_length=50)
     mileage = models.PositiveIntegerField()

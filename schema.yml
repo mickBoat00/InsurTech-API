@@ -1,0 +1,152 @@
+openapi: 3.0.3
+info:
+  title: Insurance API
+  version: 1.0.0
+  description: Backend for an Insurance Tech
+paths:
+  /api/auth/login/:
+    post:
+      operationId: auth_login_create
+      tags:
+      - auth
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/auth/logout/:
+    post:
+      operationId: auth_logout_create
+      tags:
+      - auth
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/auth/signup/:
+    post:
+      operationId: auth_signup_create
+      tags:
+      - auth
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/auto/coverages/:
+    get:
+      operationId: auto_coverages_list
+      tags:
+      - auto
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AutoDocument'
+          description: ''
+  /api/auto/documents/:
+    get:
+      operationId: auto_documents_list
+      tags:
+      - auto
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AutoDocument'
+          description: ''
+    post:
+      operationId: auto_documents_create
+      tags:
+      - auto
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutoDocument'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AutoDocument'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AutoDocument'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutoDocument'
+          description: ''
+components:
+  schemas:
+    AutoDocument:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        make:
+          type: string
+          maxLength: 20
+        model:
+          type: string
+          maxLength: 50
+        year:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        vin:
+          type: string
+          maxLength: 17
+        usage:
+          type: string
+          maxLength: 50
+        mileage:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        rating:
+          type: integer
+          readOnly: true
+          nullable: true
+        verified:
+          type: boolean
+          readOnly: true
+        user:
+          type: integer
+          readOnly: true
+      required:
+      - id
+      - make
+      - mileage
+      - model
+      - rating
+      - usage
+      - user
+      - verified
+      - vin
+      - year
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
