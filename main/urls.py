@@ -24,19 +24,10 @@ from rest_framework.documentation import include_docs_urls
 from rest_framework.schemas import get_schema_view
 
 urlpatterns = [
+    path("", SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
     path("admin/", admin.site.urls),
     path("api/auth/", include("accounts.urls")),
     path("api/auto/", include("auto_insurance.urls")),
-    path("", include_docs_urls(title="Insurance API")),
-    path("schema", get_schema_view(
-        title="Insurance API",
-        description="API for insurance tech",
-        version="1.0.0"
-    ), name='openapi-schema'),
-    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-    # Optional UI:
-    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
-    path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ] 
 
 if settings.DEBUG:

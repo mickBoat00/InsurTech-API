@@ -4,9 +4,9 @@ on:
   push:
 
 jobs:
-  # build-test-deploy:
-  #   uses: ./.github/workflows/build-test-deploy.yml
-  #   secrets: inherit
+  build-test-deploy:
+    uses: ./.github/workflows/build-test-deploy.yml
+    secrets: inherit
 
   infrastucture-creation:
     # needs: build-test-deploy
